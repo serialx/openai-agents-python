@@ -69,6 +69,9 @@ class HandoffInputData:
 HandoffInputFilter: TypeAlias = Callable[[HandoffInputData], MaybeAwaitable[HandoffInputData]]
 """A function that filters the input data passed to the next agent."""
 
+HandoffHistoryMapper: TypeAlias = Callable[[list[TResponseInputItem]], list[TResponseInputItem]]
+"""A function that maps the previous transcript to the nested summary payload."""
+
 
 @dataclass
 class Handoff(Generic[TContext, TAgent]):

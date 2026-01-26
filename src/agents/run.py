@@ -43,7 +43,7 @@ from .guardrail import (
     OutputGuardrail,
     OutputGuardrailResult,
 )
-from .handoffs import Handoff, HandoffInputFilter, handoff
+from .handoffs import Handoff, HandoffHistoryMapper, HandoffInputFilter, handoff
 from .items import (
     HandoffCallItem,
     ItemHelpers,
@@ -147,6 +147,19 @@ class RunConfig:
     """A global input filter to apply to all handoffs. If `Handoff.input_filter` is set, then that
     will take precedence. The input filter allows you to edit the inputs that are sent to the new
     agent. See the documentation in `Handoff.input_filter` for more details.
+    """
+
+    nest_handoff_history: bool = False
+    """Opt-in beta: wrap prior run history in a single assistant message before handing off when no
+    custom input filter is set. This is disabled by default while we stabilize nested handoffs; set
+    to True to enable the collapsed transcript behavior.
+    """
+
+    handoff_history_mapper: HandoffHistoryMapper | None = None
+    """Optional function that receives the normalized transcript (history + handoff items) and
+    returns the input history that should be passed to the next agent. When left as `None`, the
+    runner collapses the transcript into a single assistant message. This function only runs when
+    `nest_handoff_history` is True.
     """
 
     input_guardrails: list[InputGuardrail[Any]] | None = None

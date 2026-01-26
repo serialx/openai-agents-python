@@ -1,4 +1,5 @@
 try:
+    from .manager import MCPServerManager
     from .server import (
         MCPServer,
         MCPServerSse,
@@ -22,6 +23,7 @@ from .util import (
 
 __all__ = [
     "MCPServer",
+    "MCPServerManager",
     "MCPServerSse",
     "MCPServerSseParams",
     "MCPServerStdio",
